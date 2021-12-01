@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="420.0" prefWidth="550.0" spacing="20.0" style="-fx-background-color: #2B2B2B;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.verus.techtracker_2.HelloController">
+  <padding>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+  </padding>
+   <Text fill="#797979" stroke="#807f7f" strokeType="OUTSIDE" text="Configurations - Verus Corp" textAlignment="CENTER">
+      <font>
+         <Font name="System Bold" size="37.0" />
+      </font>
+   </Text>
+   <TableView fx:id="OrgTbl" onMousePressed="#loadData" prefHeight="291.0" prefWidth="510.0" style="-fx-border-color: black; -fx-background-color: #505050;" />
+
+</VBox>
