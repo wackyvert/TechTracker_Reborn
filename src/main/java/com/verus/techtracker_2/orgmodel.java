@@ -11,6 +11,25 @@ public class orgmodel {
     StringProperty CustomerIDProp;
     StringProperty CustomerNameProp;
     BooleanProperty inactiveProp;
+    boolean counts;
+    boolean migrated;
+    public boolean isCounts() {
+        return counts;
+    }
+
+    public void setCounts(boolean counts) {
+        this.counts = counts;
+    }
+
+    public boolean isMigrated() {
+        return migrated;
+    }
+
+    public void setMigrated(boolean migrated) {
+        this.migrated = migrated;
+    }
+
+
     public String getNotes() {
         return notes;
     }
@@ -44,10 +63,12 @@ public class orgmodel {
         this.Inactive = Inactive;
     }
 
-    public orgmodel(String CustomerID, String CustomerName, boolean inactive, String notes) {
+    public orgmodel(String CustomerID, String CustomerName,  String notes,boolean inactive,  boolean Migrated, boolean Counts) {
         this.CustomerID = CustomerID;
         this.CustomerName=CustomerName;
         this.Inactive=inactive;
         this.notes=notes;
+        this.migrated=Migrated;
+        this.counts=Counts;
     }
 }

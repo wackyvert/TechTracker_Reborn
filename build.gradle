@@ -2,6 +2,9 @@ plugins {
   id 'java'
   id 'application'
   id 'org.openjfx.javafxplugin' version '0.0.10'
+  id'com.github.johnrengelman.shadow' version "7.1.0"
+
+
 }
 
 group 'com.Verus'
@@ -23,6 +26,13 @@ tasks.withType(JavaCompile) {
   options.encoding = 'UTF-8'
 }
 
+jar {
+  manifest{
+    attributes (
+            'MainClass' : 'com.verus.techtracker_2.HelloApplication'
+    )
+  }
+}
 application {
   mainModule = 'com.verus.techtracker_2'
   mainClass = 'com.verus.techtracker_2.HelloApplication'
@@ -39,6 +49,9 @@ dependencies {
   implementation 'org.jetbrains:annotations:20.1.0'
   implementation 'org.jetbrains:annotations:20.1.0'
   implementation 'org.jetbrains:annotations:20.1.0'
+  // https://mvnrepository.com/artifact/com.opencsv/opencsv
+  implementation 'com.opencsv:opencsv:5.5.2'
+
 
 
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")

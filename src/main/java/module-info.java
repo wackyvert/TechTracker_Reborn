@@ -4,9 +4,9 @@ module com.verus.techtracker_2 {
 
                         requires org.kordamp.bootstrapfx.core;
     requires java.sql;
+    requires com.opencsv;
 
 
     opens com.verus.techtracker_2 to javafx.fxml;
-
     exports com.verus.techtracker_2;
 }
