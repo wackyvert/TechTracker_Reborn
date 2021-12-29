@@ -13,18 +13,28 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-
 import java.io.IOException;
 import java.sql.*;
 
 public class MainViewController {
+    private static final String url = "jdbc:sqlserver://10.9.32.46:1433;database=TechTracker;integratedSecurity=true";
     private static String currentID;
+    private static Connection conn1;
+    private static Connection conn2;
+    private static String currentHardwareID_fk;
     @FXML
     TextField custNameBox = new TextField();
     @FXML
     TextArea CustNotesBox = new TextArea();
     @FXML
     CheckBox InactiveBox = new CheckBox();
+    @FXML
+    Button refreshButton = new Button();
+    @FXML
+    ObservableList<ObservableList> hardDataList = FXCollections.observableArrayList();
+    @FXML
+    ObservableList<ObservableList> softDataList = FXCollections.observableArrayList();
+    ResultSet rs = null;
     @FXML
     private TextField nameFilterBox;
     @FXML
@@ -40,25 +50,41 @@ public class MainViewController {
     @FXML
     private ListView<orgmodel> orgTbl2;
     @FXML
-    Button refreshButton = new Button();
-    @FXML
-    ObservableList<ObservableList> hardDataList = FXCollections.observableArrayList();
-    @FXML
-    ObservableList<ObservableList> softDataList = FXCollections.observableArrayList();
-    @FXML
     private TableView<ObservableList> HardTbl;
     @FXML
     private TableView<ObservableList> SoftTbl;
-    private static Connection conn1;
-    private static Connection conn2;
-    private static final String url = "jdbc:sqlserver://10.9.32.46:1433;database=TechTracker;integratedSecurity=true";
-
-    ResultSet rs = null;
     @FXML
     private CheckBox MigratedBox;
     @FXML
     private CheckBox CountsBox;
-    private String currentHardwareID_fk;
+
+
+    public static String getCurrentID() {
+
+        return currentID;
+    }
+
+    private static Connection connect(Connection connection) throws SQLException {
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println("Error: " + cnfe.getMessage());
+        } catch (InstantiationException ie) {
+            System.err.println("Error: " + ie.getMessage());
+        } catch (IllegalAccessException iae) {
+            System.err.println("Error: " + iae.getMessage());
+        }
+
+        connection = DriverManager.getConnection(url);
+        return connection;
+    }
+
+    public static Connection getConnection(Connection connection) throws SQLException, ClassNotFoundException {
+        if (connection != null && !connection.isClosed())
+            return connection;
+        connection = connect(connection);
+        return connection;
+    }
 
     public void loadCounts(String id) throws SQLException, ClassNotFoundException {
         getConnection(conn2);
@@ -182,11 +208,6 @@ public class MainViewController {
         }
     }
 
-    public static String getCurrentID() {
-
-        return currentID;
-    }
-
     public void loadSoftData(String id) throws SQLException, ClassNotFoundException {
         getConnection(conn2);
         SoftTbl.getItems().clear();
@@ -244,10 +265,6 @@ public class MainViewController {
 
         }
     }
-
-
-
-
 
     @FXML
     public void initialize() throws SQLException, ClassNotFoundException {
@@ -325,8 +342,20 @@ public class MainViewController {
         });
 
 
+    }
+
+    public void start(Stage stage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("configView.fxml"));
+        Scene scene = new Scene(root, 1920, 1000);
+        stage.setScene(scene);
+        stage.setTitle("TechTracker Reborn");
+
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.show();
+
 
     }
+
     @FXML
     private void updateConfigList(String id) throws SQLException, ClassNotFoundException {
         configList.getSelectionModel()
@@ -336,33 +365,24 @@ public class MainViewController {
                     if (newSelection != null) {
                         // assuming names of property accessor methods:
                         String Model = newSelection.getModel();
-                        String hardwareid_fk = newSelection.getHardwareid_fk();
+                        currentHardwareID_fk = newSelection.getHardwareid_fk();
                         String idtag = newSelection.getHardware_name();
                         String serial = newSelection.getSerial();
-                        String purchase=newSelection.getPurchasedate();
+                        String purchase = newSelection.getPurchasedate();
                         String renewal = newSelection.getRenewaldate();
                         String config = newSelection.getConfig();
                         String notes = newSelection.getNotes();
                         // do whatever you need with the data:
-                        Stage stage1 = new Stage();
+                       Stage stage = new Stage();
                         System.out.println("Selected config id: " + idtag);
-                        Parent root = null;
                         try {
-                            root = FXMLLoader.load(getClass().getResource("configView.fxml"));
+                            start(stage);
+                            System.out.println("Selected Config:"+currentHardwareID_fk);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        Scene scene1 = new Scene(root, 800, 600);
-                        stage1.setScene(scene1);
-                        stage1.setTitle("Config");
 
-
-                        stage1.show();
-                        currentHardwareID_fk = hardwareid_fk;
                         //ConfigViewControl.setConfigInfo(Model, hardwareid_fk, idtag, serial, purchase, renewal, config, notes);
-
-
-
 
 
                     }
@@ -371,7 +391,7 @@ public class MainViewController {
         ObservableList<ConfigModel> configObservableList = FXCollections.observableArrayList();
 
 
-        ResultSet rs1= DBControl.getRs("SELECT      dbo.tbHardwareSite.hardwareID_FK,  dbo.tbCustomers.CustomerName AS Organization, \n" +
+        ResultSet rs1 = DBControl.getRs("SELECT      dbo.tbHardwareSite.hardwaresiteid,  dbo.tbCustomers.CustomerName AS Organization, \n" +
                 "                         CASE WHEN HardwareType = 2 THEN 'Server' WHEN HardwareType = 1 THEN 'Workstation' WHEN HardwareType = 3 THEN 'Switch' WHEN HardwareType = 4 THEN 'Switch' WHEN HardwareType\n" +
                 "                          = 5 THEN 'Router' WHEN HardwareType = 6 THEN 'Firewall' WHEN HardwareType = 7 THEN 'Miscellaneous' WHEN HardwareType = 8 THEN 'Printer' WHEN HardwareType = 9 THEN 'Bridge'\n" +
                 "                          ELSE 'Managed Configuration' END AS configuration_type_name, dbo.tbManufacturers.MftrName+' '+dbo.tbHardware.HardwareName+' '+ dbo.tbHardware.ModelNo+'('+dbo.tbHardwareSite.IDTag+')'  AS model, dbo.tbHardwareSite.SerialNo AS serial_number, \n" +
@@ -386,7 +406,7 @@ public class MainViewController {
                 "                         dbo.tbCustomers ON dbo.tbSites.CustomerID_FK = dbo.tbCustomers.CustomerID\n" +
                 "WHERE CustomerID=" + id);
         while (rs1.next()) {                     //1 customername 2 customerid 3 inactive 4 notes 5 migrated 6 counts
-            ConfigModel config = new ConfigModel(rs1.getString("hardware_name"), rs1.getString("purchased_at"), rs1.getString("hardwareID_fk"), rs1.getString("installed_at"),rs1.getString("serial_number"), rs1.getString("Notes"), rs1.getString("manufacturer_name"), rs1.getString("model"), rs1.getString("switchrouterconfig") );
+            ConfigModel config = new ConfigModel(rs1.getString("hardware_name"), rs1.getString("purchased_at"), rs1.getString("hardwaresiteid"), rs1.getString("installed_at"), rs1.getString("serial_number"), rs1.getString("Notes"), rs1.getString("manufacturer_name"), rs1.getString("model"), rs1.getString("switchrouterconfig"));
             configObservableList.add(config);
         }
         configList.setItems(configObservableList);
@@ -404,40 +424,41 @@ public class MainViewController {
             }
         });
     }
+    public static String gethwid(){
+        return currentHardwareID_fk;
+    }
     @FXML
     private void runITGConvert() throws SQLException, ClassNotFoundException {
         migrateMain.migrate(currentID);
     }
+
     @FXML
     private void updateSQL() throws SQLException, ClassNotFoundException {
         ResultSet resultSet;
         String newName, newNotes;
-        newName=custNameBox.getText();
-        newNotes=custNameBox.getText();
+        newName = custNameBox.getText();
+        newNotes = CustNotesBox.getText();
         int newInactive, newMigrated, newCounts;
-       if (InactiveBox.isSelected()){
-           newInactive=1;
-       }
-       else{
-           newInactive = 0;
-       }
-        if (CountsBox.isSelected()){
-            newCounts=1;
+        if (InactiveBox.isSelected()) {
+            newInactive = 1;
+        } else {
+            newInactive = 0;
         }
-        else{
+        if (CountsBox.isSelected()) {
+            newCounts = 1;
+        } else {
             newCounts = 0;
         }
-        if (MigratedBox.isSelected()){
-            newMigrated=1;
-        }
-        else{
+        if (MigratedBox.isSelected()) {
+            newMigrated = 1;
+        } else {
             newMigrated = 0;
         }
-        System.out.println("UPDATE dbo.tbCustomers\nSET MigratedToITG = "+newMigrated+", ITGCountsMatch="+newCounts+", Inactive="+newInactive+"\n WHERE CustomerID = " + currentID +"\n");
+        System.out.println("UPDATE dbo.tbCustomers\nSET MigratedToITG = " + newMigrated + ", ITGCountsMatch=" + newCounts + ", Inactive=" + newInactive + "\n WHERE CustomerID = " + currentID + "\n");
         try {
-            PreparedStatement preparedUpdateStatement = connect(conn1).prepareStatement("UPDATE dbo.tbCustomers\nSET MigratedToITG = "+newMigrated+", ITGCountsMatch="+newCounts+", Inactive="+newInactive+"\n WHERE CustomerID = " + currentID +"\n");
+            PreparedStatement preparedUpdateStatement = connect(conn1).prepareStatement("UPDATE dbo.tbCustomers\nSET MigratedToITG = " + newMigrated + ", ITGCountsMatch=" + newCounts + ", Inactive=" + newInactive + "\n WHERE CustomerID = " + currentID + "\n");
             PreparedStatement preparedUpdateStatement1 = connect(conn1).prepareStatement("UPDATE dbo.tbCustomers\n" +
-                    "SET CustomerName = '" + newName + "', Notes = '" + newNotes +"'\n WHERE CustomerID = " + currentID);
+                    "SET CustomerName = '" + newName + "', Notes = '" + newNotes + "'\n WHERE CustomerID = " + currentID);
             preparedUpdateStatement.execute();
             preparedUpdateStatement1.execute();
         } catch (SQLException e) {
@@ -448,29 +469,6 @@ public class MainViewController {
 
         initialize();
     }
-
-    private static Connection connect(Connection connection) throws SQLException {
-        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
-        } catch (ClassNotFoundException cnfe) {
-            System.err.println("Error: " + cnfe.getMessage());
-        } catch (InstantiationException ie) {
-            System.err.println("Error: " + ie.getMessage());
-        } catch (IllegalAccessException iae) {
-            System.err.println("Error: " + iae.getMessage());
-        }
-
-        connection = DriverManager.getConnection(url);
-        return connection;
-    }
-
-    public static Connection getConnection(Connection connection) throws SQLException, ClassNotFoundException {
-        if (connection != null && !connection.isClosed())
-            return connection;
-        connection = connect(connection);
-        return connection;
-    }
-
 
     public void setCustText(String name, String notes, boolean inactive, boolean migrated, boolean counts) {
         System.out.println(name);

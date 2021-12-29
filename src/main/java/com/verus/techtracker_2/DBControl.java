@@ -67,13 +67,12 @@ public class DBControl {
     return rs;}
 
 
-    public static void setTableView(String id, TableView SoftTbl, ObservableList softDataList) throws SQLException, ClassNotFoundException {
+    public static void setTableView( TableView SoftTbl, ObservableList softDataList, String query) throws SQLException, ClassNotFoundException {
         getConnection( conn2);
         SoftTbl.getColumns().clear();
         SoftTbl.getItems().clear();
         try {
-            PreparedStatement ps = connect(conn2).prepareStatement("SELECT SiteName as 'Site Name', dbo.RTF2Text(Notes) as Notes FROM dbo.tbSites\n" +
-                    "WHERE CustomerID_FK=" + id);
+            PreparedStatement ps = connect(conn2).prepareStatement(query);
             rs = ps.executeQuery();
             System.out.println(rs);
             for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
