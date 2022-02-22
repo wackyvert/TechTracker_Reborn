@@ -1,21 +1,31 @@
 package com.verus.techtracker_2;
 
+import com.opencsv.CSVWriter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 
-public class DBControl {
-    private static Connection conn2;
-    private static final String url = "jdbc:sqlserver://10.9.32.46:1433;database=TechTracker;integratedSecurity=true";
-    public static ResultSet rs = null;
 
-    static void dupe(ObservableList list) throws SQLException {
+
+public class queryWindow {
+    public static Connection getConnection(Connection connection) throws SQLException, ClassNotFoundException {
+        if (connection != null && !connection.isClosed())
+            return connection;
+        connection = connect(connection);
+        return connection;
+    }
+
+    private void dupe(ObservableList list, ResultSet rs) throws SQLException {
         while (rs.next()) {
             //Iterate Row
             ObservableList<String> row = FXCollections.observableArrayList();
@@ -32,6 +42,7 @@ public class DBControl {
 
         }
     }
+    private static final String url = "jdbc:sqlserver://10.9.32.46:1433;database=TechTracker;integratedSecurity=true";
     private static Connection connect(Connection connection) throws SQLException {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
@@ -46,34 +57,33 @@ public class DBControl {
         connection = DriverManager.getConnection(url);
         return connection;
     }
+    @FXML
+    Button exportData = new Button();
+    private static Connection conn;
+    @FXML
+    Button runButton = new Button();
+    @FXML
+    TableView tableview = new TableView();
 
-    public static Connection getConnection(Connection connection) throws SQLException, ClassNotFoundException {
-        if (connection != null && !connection.isClosed())
-            return connection;
-        connection = connect(connection);
-        return connection;
-    }
+    ObservableList<ObservableList> softDataList = FXCollections.observableArrayList();
 
-    public static ResultSet getRs(String query) throws SQLException, ClassNotFoundException {
-        getConnection(conn2);
+    public void loadSoftData() throws SQLException, ClassNotFoundException {
+        ResultSet rs = null;
+        getConnection(conn);
+        tableview.getItems().clear();
+        tableview.getColumns().clear();
+
+
         try {
-            PreparedStatement ps = connect(conn2).prepareStatement(query);
+            PreparedStatement ps = connect(conn).prepareStatement("SELECT dbo.tbCustomers.CustomerID, dbo.tbCustomers.CustomerName, dbo.tbCustomers.MigratedToITG, dbo.tbCustomers.ITGCountsMatch, dbo.tbCustomers.Inactive\n" +
+                    "FROM dbo.tbCustomers \n"
+                    );
             rs = ps.executeQuery();
-
-    }catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error on Building Data");
-        }
-    return rs;}
-
-
-    public static void setTableView( TableView SoftTbl, ObservableList softDataList, String query) throws SQLException, ClassNotFoundException {
-        getConnection( conn2);
-        SoftTbl.getColumns().clear();
-        SoftTbl.getItems().clear();
-        try {
-            PreparedStatement ps = connect(conn2).prepareStatement(query);
-            rs = ps.executeQuery();
+            FileOutputStream path = new FileOutputStream(new File("C:\\TechTrackerExports\\exportedData.csv"));
+            CSVWriter csvWriter = new CSVWriter(new OutputStreamWriter(path, StandardCharsets.UTF_8));
+            csvWriter.writeAll(rs, true);
+            csvWriter.flush();
+            csvWriter.close();
             System.out.println(rs);
             for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
                 //We are using non property style for making dynamic table
@@ -85,7 +95,7 @@ public class DBControl {
                     }
                 });
 
-                SoftTbl.getColumns().addAll(col1);
+                tableview.getColumns().addAll(col1);
                 System.out.println("Column [" + i + "] ");
             }
 
@@ -94,15 +104,22 @@ public class DBControl {
              * Data added to ObservableList *
              *******************************
              */
-            dupe(softDataList);
+            dupe(softDataList, rs);
 
             //FINALLY ADDED TO TableView
-            SoftTbl.setItems(softDataList);
+            tableview.setItems(softDataList);
+
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");
         }
+    }
+    public void exportData() throws IOException, SQLException {
+
+    }
+    public void runQuery() throws SQLException, ClassNotFoundException{
+        loadSoftData();
 
     }
 }
-

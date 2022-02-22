@@ -1,0 +1,52 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TechTracker_2:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TechTracker_2_jar</output-path>
+    <root id="archive" name="TechTracker_2.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="TechTracker_2.main" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/20.1.0/2fcd1f3225bca0c4a7bc931142076f8c1e80993f/annotations-20.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-engine/5.7.1/7fcfa59c5533abb41f86b1408960737eeaf1f49f/junit-jupiter-engine-5.7.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apiguardian/apiguardian-api/1.1.0/fc9dff4bb36d627bdc553de77e1f17efd790876c/apiguardian-api-1.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/17-ea+11/9f47509f1057ab97fd561c04d994468491535eac/javafx-controls-17-ea+11-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.opentest4j/opentest4j/1.2.0/28c11eb91f9b6d8e200631d46e20a7f407f2a046/opentest4j-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-text/1.9/ba6ac8c2807490944a0a27f6f8e68fb5ed2e80e2/commons-text-1.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-beanutils/commons-beanutils/1.9.4/d52b9abcd97f38c81342bb7e7ae1eee9b73cba51/commons-beanutils-1.9.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-fxml/17-ea+11/31d0923d6c5275f20d0cf6b2eaf2fceab0ba559/javafx-fxml-17-ea+11-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-base/17-ea+11/fe011b8200745d2f2c5a9de789cbd7ae763bf482/javafx-base-17-ea+11-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/17-ea+11/c56dfd54f950b49fcd9a411f2687580de8673b86/javafx-controls-17-ea+11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.12.0/c6842c86792ff03b9f1d1fe2aab8dc23aa6c6f0e/commons-lang3-3.12.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.microsoft.sqlserver/mssql-jdbc/9.4.0.jre16/22f63f2fdb5a4ea3d311f1d1576a1f85a67f3c4f/mssql-jdbc-9.4.0.jre16.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-base/17-ea+11/780ecd5fe969ee38a5448a6e6a917b77f5b78dba/javafx-base-17-ea+11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-graphics/17-ea+11/17fd20dae73d8747199790f2c05059a93b2f9c9c/javafx-graphics-17-ea+11-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-graphics/17-ea+11/ea43f18e3002fa0fe22e3c40671102079cedb7cb/javafx-graphics-17-ea+11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.opencsv/opencsv/5.5.2/cf58631e2efa9a202bbeaea09321be68232efb19/opencsv-5.5.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.2/4bfc12adfe4842bf07b657f0369c4cb522955686/commons-logging-1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-engine/1.7.1/d276a968c57f5d60a421dedd1f8b6ca2fae09e86/junit-platform-engine-1.7.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.kordamp.bootstrapfx/bootstrapfx-core/0.4.0/8d019b30266c00770cf29921d1008ad7feed0ed6/bootstrapfx-core-0.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-collections4/4.4/62ebe7544cb7164d87e0637a2a6a2bdc981395e8/commons-collections4-4.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-collections/commons-collections/3.2.2/8ad72fe39fa8c91eaaf12aadb21e0c3661fe26d5/commons-collections-3.2.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-commons/1.7.1/7c49f0074842d07f4335de2389d624a7437d1407/junit-platform-commons-1.7.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-api/5.7.1/a7261dff44e64aea7f621842eac5977fd6d2412d/junit-jupiter-api-5.7.1.jar" path-in-jar="/" />
+      <element id="module-source" name="TechTracker_2.main" />
+      <element id="library" level="project" name="Gradle: org.openjfx:javafx-fxml:win:17-ea+11" />
+      <element id="library" level="project" name="Gradle: org.openjfx:javafx-controls:17-ea+11" />
+      <element id="library" level="project" name="Gradle: org.openjfx:javafx-controls:win:17-ea+11" />
+      <element id="library" level="project" name="Gradle: org.openjfx:javafx-graphics:17-ea+11" />
+      <element id="library" level="project" name="Gradle: org.openjfx:javafx-graphics:win:17-ea+11" />
+      <element id="library" level="project" name="Gradle: org.openjfx:javafx-base:17-ea+11" />
+      <element id="library" level="project" name="Gradle: org.openjfx:javafx-base:win:17-ea+11" />
+      <element id="library" level="project" name="Gradle: org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0" />
+      <element id="library" level="project" name="Gradle: com.microsoft.sqlserver:mssql-jdbc:9.4.0.jre16" />
+      <element id="library" level="project" name="Gradle: org.jetbrains:annotations:20.1.0" />
+      <element id="library" level="project" name="Gradle: com.opencsv:opencsv:5.5.2" />
+      <element id="library" level="project" name="Gradle: org.apache.commons:commons-text:1.9" />
+      <element id="library" level="project" name="Gradle: org.apache.commons:commons-lang3:3.12.0" />
+      <element id="library" level="project" name="Gradle: commons-beanutils:commons-beanutils:1.9.4" />
+      <element id="library" level="project" name="Gradle: org.apache.commons:commons-collections4:4.4" />
+      <element id="library" level="project" name="Gradle: commons-logging:commons-logging:1.2" />
+      <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.2" />
+    </root>
+  </artifact>
+</component>

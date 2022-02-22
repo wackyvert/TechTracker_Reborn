@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+
 import java.io.IOException;
 import java.sql.*;
 
@@ -23,9 +24,10 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(root, 1920, 1000);
         stage.setScene(scene);
         stage.setTitle("TechTracker Reborn");
-
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.getIcons().add(new Image("file:icon.png"));
         stage.show();
+
 
 
     }

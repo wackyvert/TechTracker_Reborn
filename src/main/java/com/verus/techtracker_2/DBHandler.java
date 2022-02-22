@@ -197,7 +197,7 @@ public class DBHandler {
 
             PreparedStatement preparedStatement = connect().prepareStatement("SELECT        dbo.tbCustomers.CustomerID AS ignore, CASE WHEN dbo.tbWebAppsSite.Inactive = 'True' THEN 'Inactive' ELSE 'Active' END AS status, dbo.tbCustomers.CustomerName AS organization, dbo.tbSites.SiteName AS location, \n" +
                     "                         CASE WHEN WebAppURL IS NULL THEN '  ' ELSE WebAppUrl END AS url, CASE WHEN dbo.RTF2Text(dbo.tbWebAppsSite.Notes) = '{' THEN '' ELSE dbo.RTF2Text(dbo.tbWebAppsSite.Notes) END AS notes, \n" +
-                    "                         CASE WHEN dbo.tbWebAppsSite.IDTag LIKE '%0.%' THEN CONCAT(WebAppName, ' - ', IDTag) ELSE CONCAT(IDTag, ' - ',WebAppName) END AS name, CASE WHEN dbo.tbWebApps.WebAppType = 1 THEN 'Online' ELSE 'Online' END AS service_location, \n" +
+                    "                        CONCAT(IDTag, ' - ', WebAppName) AS name, CASE WHEN dbo.tbWebApps.WebAppType = 1 THEN 'Online' ELSE 'Online' END AS service_location, \n" +
                     "                         CASE WHEN dbo.tbWebAppsSite.TimeStamp IS NULL THEN 'Web App' ELSE 'Web App' END AS category, dbo.tbManufacturers.MftrName AS manufacturer\n" +
                     "FROM            dbo.tbCustomers INNER JOIN\n" +
                     "                         dbo.tbSites ON dbo.tbCustomers.CustomerID = dbo.tbSites.CustomerID_FK INNER JOIN\n" +
@@ -234,8 +234,8 @@ public class DBHandler {
 
         try {
 
-            PreparedStatement preparedStatement = connect().prepareStatement("SELECT        dbo.tbUserPass.Username, dbo.tbUserPass.Password, dbo.tbCustomers.CustomerID, dbo.tbCustomers.CustomerName, CASE WHEN dbo.tbWebAppsSite.IDTag LIKE '%0.%' THEN CONCAT(WebAppName, ' - ', IDTag) ELSE CONCAT(IDTag, ' - ', WebAppName) \n" +
-                    "                         END AS name\n" +
+            PreparedStatement preparedStatement = connect().prepareStatement("SELECT        dbo.tbUserPass.Username, dbo.tbUserPass.Password, dbo.tbCustomers.CustomerID, dbo.tbCustomers.CustomerName, CONCAT(IDTag, ' - ', WebAppName) AS name \n" +
+                    "                       \n" +
                     "FROM            dbo.tbUserPass INNER JOIN\n" +
                     "                         dbo.tbWebAppUserPass ON dbo.tbUserPass.UserPassID = dbo.tbWebAppUserPass.UserPassID_FK INNER JOIN\n" +
                     "                         dbo.tbWebAppsSite ON dbo.tbWebAppUserPass.WebAppID_FK = dbo.tbWebAppsSite.WebAppSiteID INNER JOIN\n" +

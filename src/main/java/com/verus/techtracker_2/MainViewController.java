@@ -23,6 +23,8 @@ public class MainViewController {
     private static Connection conn2;
     private static String currentHardwareID_fk;
     @FXML
+    Scene scene;
+    @FXML
     TextField custNameBox = new TextField();
     @FXML
     TextArea CustNotesBox = new TextArea();
@@ -205,6 +207,7 @@ public class MainViewController {
             SoftwareCount.setText(rs.getString("Application Count"));
             PWCount.setText(rs.getString("Password Count"));
             IpCount.setText(rs.getString("IP Count"));
+            WarrantyCount.setText(rs.getString("Warranty Count"));
         }
     }
 
@@ -265,7 +268,8 @@ public class MainViewController {
 
         }
     }
-
+    @FXML
+    Label custIDLabel;
     @FXML
     public void initialize() throws SQLException, ClassNotFoundException {
         System.out.println("IM BEING INITIALIZED!");
@@ -284,7 +288,7 @@ public class MainViewController {
                         boolean inactive = newSelection.isInactive();
                         // do whatever you need with the data:
                         System.out.println("Selected customer id: " + id);
-                        setCustText(customerName, notes, inactive, migrated, counts);
+                        setCustText(customerName, notes, inactive, migrated, counts, id);
                         currentID = id;
                         try {
                             updateConfigList(id);
@@ -346,8 +350,9 @@ public class MainViewController {
 
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("configView.fxml"));
-        Scene scene = new Scene(root, 1920, 1000);
+        scene = new Scene(root, 1188, 480);
         stage.setScene(scene);
+        System.out.println("too many times?");
         stage.setTitle("TechTracker Reborn");
 
         stage.getIcons().add(new Image("file:icon.png"));
@@ -355,7 +360,23 @@ public class MainViewController {
 
 
     }
+    public void startQuery(Stage stage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("queryRun.fxml"));
+        scene = new Scene(root, 1400, 700);
+        stage.setScene(scene);
 
+        stage.setTitle("TechTracker Reborn");
+
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.show();
+
+
+    }
+    public void queryButton() throws IOException {
+        startQuery(stage3);
+    }
+    Stage stage2 = new Stage();
+    Stage stage3 = new Stage();
     @FXML
     private void updateConfigList(String id) throws SQLException, ClassNotFoundException {
         configList.getSelectionModel()
@@ -373,10 +394,10 @@ public class MainViewController {
                         String config = newSelection.getConfig();
                         String notes = newSelection.getNotes();
                         // do whatever you need with the data:
-                       Stage stage = new Stage();
+
                         System.out.println("Selected config id: " + idtag);
                         try {
-                            start(stage);
+                            start(stage2);
                             System.out.println("Selected Config:"+currentHardwareID_fk);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -458,7 +479,7 @@ public class MainViewController {
         try {
             PreparedStatement preparedUpdateStatement = connect(conn1).prepareStatement("UPDATE dbo.tbCustomers\nSET MigratedToITG = " + newMigrated + ", ITGCountsMatch=" + newCounts + ", Inactive=" + newInactive + "\n WHERE CustomerID = " + currentID + "\n");
             PreparedStatement preparedUpdateStatement1 = connect(conn1).prepareStatement("UPDATE dbo.tbCustomers\n" +
-                    "SET CustomerName = '" + newName + "', Notes = '" + newNotes + "'\n WHERE CustomerID = " + currentID);
+                    "SET CustomerName = '" + newName + "'\n WHERE CustomerID = " + currentID);
             preparedUpdateStatement.execute();
             preparedUpdateStatement1.execute();
         } catch (SQLException e) {
@@ -470,7 +491,7 @@ public class MainViewController {
         initialize();
     }
 
-    public void setCustText(String name, String notes, boolean inactive, boolean migrated, boolean counts) {
+    public void setCustText(String name, String notes, boolean inactive, boolean migrated, boolean counts, String id) {
         System.out.println(name);
         System.out.println(notes);
         System.out.println(inactive);
@@ -481,6 +502,7 @@ public class MainViewController {
         custNameBox.setText(name);
         CustNotesBox.setText(notes);
         InactiveBox.setSelected(inactive);
+        custIDLabel.setText(id);
     }
 
 }

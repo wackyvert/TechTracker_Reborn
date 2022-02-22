@@ -2,7 +2,9 @@ plugins {
   id 'java'
   id 'application'
   id 'org.openjfx.javafxplugin' version '0.0.10'
-  id'com.github.johnrengelman.shadow' version "7.1.0"
+  id 'org.javamodularity.moduleplugin' version '1.8.10'
+
+
 
 
 }
@@ -51,6 +53,9 @@ dependencies {
   implementation 'org.jetbrains:annotations:20.1.0'
   // https://mvnrepository.com/artifact/com.opencsv/opencsv
   implementation 'com.opencsv:opencsv:5.5.2'
+  implementation 'com.aquafx-project:aquafx:0.2'
+  implementation 'com.jfoenix:jfoenix:9.0.10'
+
 
 
 
